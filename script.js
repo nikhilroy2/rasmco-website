@@ -997,4 +997,141 @@
       revealFooter();
     }
   }
+
+  /* -------------------------------------------------------------------------- */
+  /* Subpage (subpage.html) Scroll Reveal Animations                            */
+  /* -------------------------------------------------------------------------- */
+  var pageBanner = document.querySelector(".page-banner");
+  if (pageBanner) {
+    setTimeout(function () {
+      pageBanner.classList.add("is-visible");
+    }, 120);
+  }
+
+  var sectorSelectSection = document.querySelector(".sector-select-section");
+  var subpageSectorCards = document.querySelectorAll(".sector-select-section .sector-card");
+
+  if (sectorSelectSection) {
+    var revealSectorSelect = function () {
+      sectorSelectSection.classList.add("is-visible");
+      subpageSectorCards.forEach(function (card, index) {
+        setTimeout(function () {
+          card.classList.add("is-visible");
+        }, 120 + index * 180);
+      });
+    };
+
+    if ("IntersectionObserver" in window) {
+      var sectorSelectObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              revealSectorSelect();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+      sectorSelectObserver.observe(sectorSelectSection);
+
+      var subpageCardObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2, rootMargin: "0px 0px -30px 0px" }
+      );
+
+      subpageSectorCards.forEach(function (card) {
+        subpageCardObserver.observe(card);
+      });
+    } else {
+      revealSectorSelect();
+    }
+  }
+
+  var sectorDetailBand = document.querySelector(".sector-detail-band");
+  if (sectorDetailBand) {
+    var revealSectorBand = function () {
+      sectorDetailBand.classList.add("is-visible");
+    };
+
+    if ("IntersectionObserver" in window) {
+      var sectorBandObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              revealSectorBand();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -30px 0px" }
+      );
+      sectorBandObserver.observe(sectorDetailBand);
+    } else {
+      revealSectorBand();
+    }
+  }
+
+  var productsSection = document.querySelector(".products-section");
+  var productRows = document.querySelectorAll(".product-row");
+
+  if (productsSection) {
+    var revealProductsHeader = function () {
+      productsSection.classList.add("is-visible");
+    };
+
+    if ("IntersectionObserver" in window) {
+      var productsHeaderObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              revealProductsHeader();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+      );
+      productsHeaderObserver.observe(productsSection);
+
+      var productRowObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+
+      productRows.forEach(function (row) {
+        productRowObserver.observe(row);
+      });
+    } else {
+      revealProductsHeader();
+      productRows.forEach(function (row) {
+        row.classList.add("is-visible");
+      });
+    }
+  }
+
+  if (window.location.hash) {
+    var targetEl = document.querySelector(window.location.hash);
+    if (targetEl) {
+      targetEl.classList.add("is-visible");
+      var subcards = targetEl.querySelectorAll(".sector-card, .product-row");
+      subcards.forEach(function (c) {
+        c.classList.add("is-visible");
+      });
+    }
+  }
 })();
