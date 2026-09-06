@@ -278,19 +278,223 @@
   });
 
   /* -------------------------------------------------------------------------- */
-  /* Partners Strip Carousel                                                   */
+  /* Partners Slider (partner1.png - partner4.png with auto slide & button)     */
   /* -------------------------------------------------------------------------- */
-  var partnerShift = 0;
+  var partnersStage = document.querySelector(".partners-stage");
+  var partnersTrack = document.querySelector(".partners-track");
   var partnerNextBtn = document.querySelector(".partners-next");
-  var partnerStrip = document.querySelector(".partners-strip");
+  var partnerSlides = document.querySelectorAll(".partner-slide");
 
-  if (partnerNextBtn && partnerStrip) {
-    partnerNextBtn.addEventListener("click", function () {
-      partnerShift = partnerShift ? 0 : 28;
-      partnerStrip.style.transform =
-        "translateX(" +
-        (document.documentElement.dir === "rtl" ? partnerShift : -partnerShift) +
-        "px)";
-    });
+  if (partnersTrack && partnerSlides.length > 0) {
+    var baseCount = 4; // 4 unique partner logos
+    var currentStep = 0;
+    var isSliding = false;
+    var autoSlideDelay = 3000;
+    var autoSlideTimer = null;
+
+    function updateActiveClasses(stepIndex) {
+      partnerSlides.forEach(function (slide, idx) {
+        slide.classList.remove("active-1", "active-2", "active-3", "active-4");
+        var pos = idx - stepIndex;
+        if (pos === 0) {
+          slide.classList.add("active-1");
+        } else if (pos === 1) {
+          slide.classList.add("active-2");
+        } else if (pos === 2) {
+          slide.classList.add("active-3");
+        } else if (pos === 3) {
+          slide.classList.add("active-4");
+        }
+      });
+    }
+
+    var baseWidths = [];
+
+    function measureBaseWidths() {
+      baseWidths = [];
+      var lastImg = partnerSlides[partnerSlides.length - 1].querySelector("img");
+      var naturalRatio = (lastImg && lastImg.naturalWidth && lastImg.naturalHeight)
+        ? (lastImg.naturalWidth / lastImg.naturalHeight)
+        : 0.866;
+      var baseH = parseFloat(window.getComputedStyle(lastImg || partnerSlides[partnerSlides.length - 1]).height) || 100;
+      var fallbackW = Math.round(baseH * naturalRatio);
+
+      for (var i = 0; i < baseCount; i++) {
+        // Clones 4, 5, 6, 7 are in base state, providing the exact base inactive width
+        var cloneSlide = partnerSlides[baseCount + i];
+        var w = (cloneSlide && cloneSlide.offsetWidth > 0) ? cloneSlide.offsetWidth : fallbackW;
+        baseWidths.push(w);
+      }
+    }
+
+    function getStepOffset(stepIndex) {
+      if (stepIndex === 0) return 0;
+      var trackStyle = window.getComputedStyle(partnersTrack);
+      var gap = parseFloat(trackStyle.gap) || 22;
+
+      var offset = 0;
+      for (var i = 0; i < stepIndex; i++) {
+        var w = (baseWidths[i % baseCount] && baseWidths[i % baseCount] > 0)
+          ? baseWidths[i % baseCount]
+          : 87;
+        offset += w + gap;
+      }
+      return offset;
+    }
+
+    function applyTransform(stepIndex, animated) {
+      var offset = getStepOffset(stepIndex);
+      var isRtl = document.documentElement.dir === "rtl";
+      partnersTrack.style.transition = animated
+        ? "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)"
+        : "none";
+      partnersTrack.style.transform =
+        "translateX(" + (isRtl ? offset : -offset) + "px)";
+    }
+
+    function nextPartner() {
+      if (isSliding) return;
+      isSliding = true;
+
+      currentStep++;
+      updateActiveClasses(currentStep);
+      applyTransform(currentStep, true);
+
+      // If we reached the end of the 4 original slides, seamlessly reset to 0
+      if (currentStep >= baseCount) {
+        setTimeout(function () {
+          currentStep = 0;
+          updateActiveClasses(0);
+          applyTransform(0, false);
+          void partnersTrack.offsetWidth; // Force reflow
+          isSliding = false;
+        }, 620);
+      } else {
+        setTimeout(function () {
+          isSliding = false;
+        }, 620);
+      }
+    }
+
+    function prevPartner() {
+      if (isSliding) return;
+      isSliding = true;
+
+      if (currentStep === 0) {
+        // Seamlessly snap to baseCount clone (looks identical to 0), then animate back to baseCount - 1
+        currentStep = baseCount;
+        updateActiveClasses(baseCount);
+        applyTransform(baseCount, false);
+        void partnersTrack.offsetWidth; // Force reflow
+
+        setTimeout(function () {
+          currentStep = baseCount - 1;
+          updateActiveClasses(currentStep);
+          applyTransform(currentStep, true);
+          setTimeout(function () {
+            isSliding = false;
+          }, 620);
+        }, 20);
+      } else {
+        currentStep--;
+        updateActiveClasses(currentStep);
+        applyTransform(currentStep, true);
+        setTimeout(function () {
+          isSliding = false;
+        }, 620);
+      }
+    }
+
+    function startAutoSlide() {
+      stopAutoSlide();
+      autoSlideTimer = setInterval(function () {
+        nextPartner();
+      }, autoSlideDelay);
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideTimer) {
+        clearInterval(autoSlideTimer);
+        autoSlideTimer = null;
+      }
+    }
+
+    function resetAutoSlide() {
+      stopAutoSlide();
+      startAutoSlide();
+    }
+
+    if (partnerNextBtn) {
+      partnerNextBtn.addEventListener("click", function () {
+        nextPartner();
+        resetAutoSlide();
+      });
+    }
+
+    // Pause auto slide on mouse hover
+    if (partnersStage) {
+      partnersStage.addEventListener("mouseenter", stopAutoSlide);
+      partnersStage.addEventListener("mouseleave", startAutoSlide);
+
+      // Mobile Touch Gestures (Swipe to slide)
+      var touchStartX = 0;
+      var touchStartY = 0;
+      var touchEndX = 0;
+      var touchEndY = 0;
+
+      partnersStage.addEventListener("touchstart", function (e) {
+        if (e.touches && e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchEndX = touchStartX;
+          touchEndY = touchStartY;
+          stopAutoSlide();
+        }
+      }, { passive: true });
+
+      partnersStage.addEventListener("touchmove", function (e) {
+        if (e.touches && e.touches.length === 1) {
+          touchEndX = e.touches[0].clientX;
+          touchEndY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      partnersStage.addEventListener("touchend", function () {
+        var diffX = touchEndX - touchStartX;
+        var diffY = touchEndY - touchStartY;
+        var isRtl = document.documentElement.dir === "rtl";
+        var threshold = 35; // minimum horizontal swipe distance
+
+        // Only trigger if horizontal swipe is greater than vertical movement
+        if (Math.abs(diffX) > threshold && Math.abs(diffX) > Math.abs(diffY)) {
+          if ((!isRtl && diffX < 0) || (isRtl && diffX > 0)) {
+            nextPartner();
+          } else {
+            prevPartner();
+          }
+        }
+        resetAutoSlide();
+      });
+    }
+
+    function handleResize() {
+      measureBaseWidths();
+      applyTransform(currentStep, false);
+    }
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+    window.addEventListener("load", handleResize);
+
+    var prevApplyLang = applyLang;
+    applyLang = function (lang) {
+      prevApplyLang(lang);
+      handleResize();
+    };
+
+    measureBaseWidths();
+    updateActiveClasses(0);
+    applyTransform(0, false);
+    startAutoSlide();
   }
 })();
