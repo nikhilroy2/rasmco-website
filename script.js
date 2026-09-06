@@ -315,6 +315,57 @@
   }
 
   /* -------------------------------------------------------------------------- */
+  /* Sectors Scroll Reveal Animation (One by One)                               */
+  /* -------------------------------------------------------------------------- */
+  var sectorsSection = document.querySelector(".sectors-section") || document.getElementById("sectors");
+  var sectorCards = document.querySelectorAll(".sector-item");
+
+  if (sectorsSection) {
+    var revealSectors = function () {
+      sectorsSection.classList.add("is-visible");
+      sectorCards.forEach(function (card, index) {
+        setTimeout(function () {
+          card.classList.add("is-visible");
+        }, 150 + index * 320);
+      });
+    };
+
+    if ("IntersectionObserver" in window) {
+      var sectorsObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              revealSectors();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+      sectorsObserver.observe(sectorsSection);
+
+      // Also observe cards individually for incremental scrolling
+      var cardObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.25, rootMargin: "0px 0px -30px 0px" }
+      );
+
+      sectorCards.forEach(function (card) {
+        cardObserver.observe(card);
+      });
+    } else {
+      revealSectors();
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
   /* Sector Rollover                                                            */
   /* -------------------------------------------------------------------------- */
   var sectorItems = document.querySelectorAll(".sector-item");
@@ -336,9 +387,9 @@
   });
 
   /* -------------------------------------------------------------------------- */
-  /* Rasmco In Numbers Count-up                                                */
+  /* Rasmco In Numbers Scroll Reveal & Count-up Animation                      */
   /* -------------------------------------------------------------------------- */
-  var numbersSection = document.getElementById("goals");
+  var numbersSection = document.getElementById("goals") || document.querySelector(".numbers-section");
   var statValues = Array.prototype.slice.call(document.querySelectorAll(".stat-value"));
   var hasCountedNumbers = false;
 
@@ -380,27 +431,68 @@
     statValues.forEach(countStat);
   }
 
-  if (numbersSection && statValues.length) {
-    statValues.forEach(function (statValue) {
-      var numberTextNode = Array.prototype.slice.call(statValue.childNodes).find(function (node) {
-        return node.nodeType === 3 && /\d/.test(node.nodeValue);
+  if (numbersSection) {
+    if (statValues.length) {
+      statValues.forEach(function (statValue) {
+        var numberTextNode = Array.prototype.slice.call(statValue.childNodes).find(function (node) {
+          return node.nodeType === 3 && /\d/.test(node.nodeValue);
+        });
+        if (numberTextNode) {
+          statValue.dataset.countTarget = numberTextNode.nodeValue.replace(/[^\d]/g, "");
+          numberTextNode.nodeValue = "0" + (/\s$/.test(numberTextNode.nodeValue) ? " " : "");
+        }
       });
-      if (numberTextNode) {
-        statValue.dataset.countTarget = numberTextNode.nodeValue.replace(/[^\d]/g, "");
-        numberTextNode.nodeValue = "0" + (/\s$/.test(numberTextNode.nodeValue) ? " " : "");
+    }
+
+    var triggerNumbers = function () {
+      numbersSection.classList.add("is-visible");
+      if (statValues.length) {
+        setTimeout(startNumbersCount, 250);
       }
-    });
+    };
 
     if ("IntersectionObserver" in window) {
-      var numbersObserver = new IntersectionObserver(function (entries, observer) {
-        if (entries.some(function (entry) { return entry.isIntersecting; })) {
-          startNumbersCount();
-          observer.disconnect();
-        }
-      }, { threshold: 0.35 });
+      var numbersObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              triggerNumbers();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
       numbersObserver.observe(numbersSection);
     } else {
-      startNumbersCount();
+      triggerNumbers();
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* Why Choose Us Scroll Reveal Animation                                     */
+  /* -------------------------------------------------------------------------- */
+  var whySection = document.querySelector(".why-section");
+  if (whySection) {
+    var revealWhy = function () {
+      whySection.classList.add("is-visible");
+    };
+
+    if ("IntersectionObserver" in window) {
+      var whyObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              revealWhy();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+      whyObserver.observe(whySection);
+    } else {
+      revealWhy();
     }
   }
 
@@ -467,6 +559,33 @@
 
   setWhySlide(whySlideIndex);
   startWhyAutoSlide();
+
+  /* -------------------------------------------------------------------------- */
+  /* Partners Scroll Reveal Animation                                           */
+  /* -------------------------------------------------------------------------- */
+  var partnersSection = document.querySelector(".partners-section") || document.getElementById("partners");
+  if (partnersSection) {
+    var revealPartners = function () {
+      partnersSection.classList.add("is-visible");
+    };
+
+    if ("IntersectionObserver" in window) {
+      var partnersObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              revealPartners();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+      partnersObserver.observe(partnersSection);
+    } else {
+      revealPartners();
+    }
+  }
 
   /* -------------------------------------------------------------------------- */
   /* Partners Slider (partner1.png - partner4.png with auto slide & button)     */
@@ -850,5 +969,32 @@
 
     syncActiveClasses();
     startAutoSlide();
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* Footer Scroll Reveal Animation                                             */
+  /* -------------------------------------------------------------------------- */
+  var footerSection = document.querySelector(".site-footer") || document.getElementById("contact");
+  if (footerSection) {
+    var revealFooter = function () {
+      footerSection.classList.add("is-visible");
+    };
+
+    if ("IntersectionObserver" in window) {
+      var footerObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              revealFooter();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -20px 0px" }
+      );
+      footerObserver.observe(footerSection);
+    } else {
+      revealFooter();
+    }
   }
 })();
