@@ -35,8 +35,14 @@
       whyProdTitle: "Products",
       whyDelTitle: "Delivery",
       whyPriceTitle: "Pricing",
-      whyLorem:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      whyExpCopy:
+        "Decades of agricultural expertise and regional market knowledge help us make confident decisions, from cultivating the land to delivering value for every partner.",
+      whyProdCopy:
+        "From naturally grown produce to integrated industrial solutions, our products are developed with consistent quality, responsible production, and customer needs in mind.",
+      whyDelCopy:
+        "Our modern cold-chain logistics network keeps products fresh and protected, supporting dependable delivery from RASMCO farms and facilities to markets across the region.",
+      whyPriceCopy:
+        "We offer transparent, competitive pricing built around reliable quality, efficient operations, and long-term value for customers and business partners.",
       sectorsTitle: "Rasmco Group Sectors",
       sectorAgri:
         "Massive national production supporting the highest standards of biosecurity and sustainable quality",
@@ -79,8 +85,14 @@
       whyProdTitle: "المنتجات",
       whyDelTitle: "التوريد",
       whyPriceTitle: "التسعير",
-      whyLorem:
-        "نجمع بين الخبرة الزراعية العميقة والرؤية الثاقبة لسوق العقار لتعظيم قيمة استثمارك الزراعي. تضمن لك معرفتنا المتخصصة اتخاذ قرارات مدروسة ومربحة في سوق الأراضي الزراعية.",
+      whyExpCopy:
+        "تمنحنا عقود من الخبرة الزراعية والمعرفة العميقة بالأسواق الإقليمية القدرة على اتخاذ قرارات واثقة، بدءاً من زراعة الأرض وحتى تقديم قيمة حقيقية لكل شريك.",
+      whyProdCopy:
+        "من المنتجات الطبيعية المزروعة بعناية إلى الحلول الصناعية المتكاملة، نطور منتجاتنا وفق معايير ثابتة من الجودة والإنتاج المسؤول واحتياجات العملاء.",
+      whyDelCopy:
+        "تحافظ شبكة الخدمات اللوجستية الحديثة وسلسلة التبريد لدينا على جودة المنتجات ونضارتها، وتدعم توصيلها بشكل موثوق من مزارع ومنشآت راسمكو إلى أسواق المنطقة.",
+      whyPriceCopy:
+        "نقدم أسعاراً تنافسية وشفافة تقوم على جودة موثوقة وعمليات فعالة وقيمة مستدامة لعملائنا وشركائنا في الأعمال.",
       sectorsTitle: "قطاعات مجموعة راسمكو",
       sectorAgri:
         "إنتاج وطني ضخم يدعم أعلى معايير الأمن الحيوي والجودة المستدامة",
@@ -264,18 +276,48 @@
   /* -------------------------------------------------------------------------- */
   var tabs = document.querySelectorAll(".why-tab");
   var panels = document.querySelectorAll(".why-panel");
+  var whySlideIndicators = document.querySelectorAll(".slide_box span");
+  var whySlideIndex = 0;
+  var whyAutoSlideDelay = 3500;
+  var whyAutoSlideTimer = null;
 
-  tabs.forEach(function (tab) {
-    tab.addEventListener("click", function () {
-      var target = tab.getAttribute("data-target");
-      tabs.forEach(function (t) {
-        t.classList.toggle("active", t === tab);
-      });
-      panels.forEach(function (panel) {
-        panel.classList.toggle("active", panel.getAttribute("data-panel") === target);
-      });
-    });
+  panels.forEach(function (panel, index) {
+    if (panel.classList.contains("active")) {
+      whySlideIndex = index;
+    }
   });
+
+  function setWhySlide(index) {
+    if (!panels.length) return;
+
+    whySlideIndex = (index + panels.length) % panels.length;
+
+    panels.forEach(function (panel) {
+      panel.classList.toggle("active", panels[whySlideIndex] === panel);
+    });
+    whySlideIndicators.forEach(function (indicator, indicatorIndex) {
+      indicator.classList.toggle("active_slide", indicatorIndex === whySlideIndex);
+    });
+  }
+
+  function stopWhyAutoSlide() {
+    if (whyAutoSlideTimer) {
+      clearInterval(whyAutoSlideTimer);
+      whyAutoSlideTimer = null;
+    }
+  }
+
+  function startWhyAutoSlide() {
+    stopWhyAutoSlide();
+    if (panels.length > 1) {
+      whyAutoSlideTimer = setInterval(function () {
+        setWhySlide(whySlideIndex + 1);
+      }, whyAutoSlideDelay);
+    }
+  }
+
+  setWhySlide(whySlideIndex);
+  startWhyAutoSlide();
 
   /* -------------------------------------------------------------------------- */
   /* Partners Slider (partner1.png - partner4.png with auto slide & button)     */

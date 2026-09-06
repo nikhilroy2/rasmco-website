@@ -25,12 +25,12 @@
       <div class="hero-bg-slide" style="background-image: url('images/hero-bg.jpg');"></div>
     </div>
     <div class="hero-overlay"></div>
-    <svg class="hero-hexagon" viewBox="0 0 640 740" aria-hidden="true">
+    <!-- <svg class="hero-hexagon" viewBox="0 0 640 740" aria-hidden="true">
       <polygon points="320,18 612,188 612,552 320,722 28,552 28,188" fill="none" stroke="rgba(255,255,255,0.28)"
         stroke-width="14" />
       <polygon points="320,48 580,198 580,542 320,692 60,542 60,198" fill="none" stroke="rgba(255,255,255,0.08)"
         stroke-width="2" />
-    </svg>
+    </svg> -->
 
     <header class="hero-header">
       <div class="container hero-topbar d-flex justify-content-end align-items-center">
@@ -117,12 +117,10 @@
     </div>
 
     <button class="hero-arrow hero-arrow-prev" type="button" aria-label="Previous slide">
-      <span class="arrow-chevrons">‹‹</span>
-      <span class="arrow-line"></span>
+      <img src="images/left_arrow.png" alt="Previous slide" class="hero-arrow-img" />
     </button>
     <button class="hero-arrow hero-arrow-next" type="button" aria-label="Next slide">
-      <span class="arrow-line"></span>
-      <span class="arrow-chevrons">››</span>
+      <img src="images/right_arrow.png" alt="Next slide" class="hero-arrow-img" />
     </button>
 
     <a href="#about" class="scroll-hint" aria-label="Scroll to about section">
@@ -151,18 +149,28 @@
             <img src="images/vision-2030.png" alt="Saudi Vision 2030" class="vision-logo" />
             <img src="images/saudi-made.png" alt="Saudi Made" class="made-logo" />
           </div>
-          <a href="#sectors" class="btn btn-gold rounded-pill" data-i18n="readMore">Read More</a>
+
         </div>
         <div class="col-lg-7">
           <div class="who-visual">
             <img src="images/who-hexagons.png" alt="RASMCO agriculture and food production" class="img-fluid" />
           </div>
         </div>
+        <div class="col-12">
+          <div class="row align-items-center g-0">
+            <div class="col-auto">
+              <a href="#sectors" class="btn btn-gold rounded-pill" data-i18n="readMore">Read More</a>
+            </div>
+            <div class="col d-flex align-items-center">
+              <div class="pattern-band" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="pattern-band" aria-hidden="true"></div>
+
 
   <section class="numbers-section" id="goals">
     <div class="container text-center">
@@ -211,21 +219,15 @@
 
   <section class="why-section" id="affiliations">
     <div class="container">
-      <div class="row align-items-center g-4">
+      <div class="row align-items-center g-4 position-relative">
         <div class="col-lg-7">
           <h2 class="section-title" data-i18n="whyTitle">Why Choose Us?</h2>
-          <p class="why-lead" data-i18n="whyLead">
+          <p class="why-lead pb-3 pb-md-5" data-i18n="whyLead">
             We combine deep agricultural expertise with unmatched real estate market insight to maximize the value of
             your farm or ranch investment. Our specialized knowledge ensures you make informed, profitable decisions in
             the agricultural land market.
           </p>
-          <div class="why-tabs d-flex flex-wrap" role="tablist">
-            <button class="why-tab" type="button" data-target="experience">Experience</button>
-            <button class="why-tab" type="button" data-target="products">Products</button>
-            <button class="why-tab" type="button" data-target="delivery">Delivery</button>
-            <button class="why-tab active" type="button" data-target="pricing">Pricing</button>
-          </div>
-          <div class="why-panel d-flex" data-panel="experience">
+          <div class="why-panel py-2 py-md-5 d-flex" data-panel="experience">
             <div class="why-icon" aria-hidden="true">
               <svg viewBox="0 0 64 64" width="72" height="72">
                 <defs>
@@ -240,12 +242,10 @@
             </div>
             <div>
               <h3 data-i18n="whyExpTitle">Experience</h3>
-              <p data-i18n="whyLorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p data-i18n="whyExpCopy">Decades of agricultural expertise and regional market knowledge help us make confident decisions, from cultivating the land to delivering value for every partner.</p>
             </div>
           </div>
-          <div class="why-panel d-flex" data-panel="products">
+          <div class="why-panel py-2 py-md-5 d-flex" data-panel="products">
             <div class="why-icon" aria-hidden="true">
               <svg viewBox="0 0 64 64" width="72" height="72">
                 <defs>
@@ -261,12 +261,10 @@
             </div>
             <div>
               <h3 data-i18n="whyProdTitle">Products</h3>
-              <p data-i18n="whyLorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p data-i18n="whyProdCopy">From naturally grown produce to integrated industrial solutions, our products are developed with consistent quality, responsible production, and customer needs in mind.</p>
             </div>
           </div>
-          <div class="why-panel d-flex" data-panel="delivery">
+          <div class="why-panel py-2 py-md-5 d-flex" data-panel="delivery">
             <div class="why-icon" aria-hidden="true">
               <svg viewBox="0 0 64 64" width="72" height="72">
                 <defs>
@@ -283,27 +281,28 @@
             </div>
             <div>
               <h3 data-i18n="whyDelTitle">Delivery</h3>
-              <p data-i18n="whyLorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p data-i18n="whyDelCopy">Our modern cold-chain logistics network keeps products fresh and protected, supporting dependable delivery from RASMCO farms and facilities to markets across the region.</p>
             </div>
           </div>
-          <div class="why-panel d-flex active" data-panel="pricing">
+          <div class="why-panel py-2 py-md-5 d-flex active" data-panel="pricing">
             <div class="why-icon">
               <img src="images/icon-pricing.png" alt="" />
             </div>
             <div>
               <h3 data-i18n="whyPriceTitle">Pricing</h3>
-              <p data-i18n="whyLorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p data-i18n="whyPriceCopy">We offer transparent, competitive pricing built around reliable quality, efficient operations, and long-term value for customers and business partners.</p>
             </div>
           </div>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5 position-static">
           <div class="why-visual">
-            <img src="images/why-question-wide.jpg" alt="Agricultural operations across RASMCO farms"
-              class="img-fluid" />
+            <div class="slide_box">
+              <span></span>
+              <span class="active_slide"></span>
+              <span></span>
+              <span></span>
+            </div>
+            <img src="images/qs.png" alt="Agricultural operations across RASMCO farms" class="img-fluid" />
           </div>
         </div>
       </div>
@@ -319,7 +318,7 @@
         <div class="col-lg-6">
           <article class="sector-item d-flex">
             <img src="images/sector-logo-1.png" alt="RASMCO Agricultural" class="sector-logo" />
-            <div class="sector-body">
+            <div class="sector-body d-flex flex-column justify-content-between">
               <p data-i18n="sectorAgri">Massive national production supporting the highest standards of biosecurity and
                 sustainable quality</p>
               <a href="#about" class="read-more-link" data-i18n="readMore">Read More</a>
@@ -327,7 +326,7 @@
           </article>
           <article class="sector-item d-flex">
             <img src="images/sector-logo-2.png" alt="RASMCO Industrial" class="sector-logo" />
-            <div class="sector-body">
+            <div class="sector-body d-flex flex-column justify-content-between">
               <p data-i18n="sectorInd">An integrated industrial complex featuring state-of-the-art global production
                 lines and advanced automated abattoirs with MAP smart packaging to ensure 100% natural purity</p>
               <a href="#about" class="read-more-link" data-i18n="readMore">Read More</a>
@@ -335,7 +334,7 @@
           </article>
           <article class="sector-item d-flex">
             <img src="images/sector-logo-3.png" alt="RASMCO Real Estate" class="sector-logo" />
-            <div class="sector-body">
+            <div class="sector-body d-flex flex-column justify-content-between">
               <p data-i18n="sectorRe">The engineering pillar constructing and developing the group's facilities and
                 logistics hubs</p>
               <a href="#about" class="read-more-link" data-i18n="readMore">Read More</a>
@@ -368,14 +367,22 @@
           <div class="partners-stage d-flex align-items-center">
             <div class="partners-viewport">
               <div class="partners-track d-flex align-items-center">
-                <div class="partner-slide active-1"><img src="images/partner1.png" alt="BinDawood" class="partner-img" /></div>
-                <div class="partner-slide active-2"><img src="images/partner2.png" alt="Carrefour" class="partner-img" /></div>
-                <div class="partner-slide active-3"><img src="images/partner3.png" alt="Farm" class="partner-img" /></div>
-                <div class="partner-slide active-4"><img src="images/partner4.png" alt="Othaim" class="partner-img" /></div>
-                <div class="partner-slide" aria-hidden="true"><img src="images/partner1.png" alt="" class="partner-img" /></div>
-                <div class="partner-slide" aria-hidden="true"><img src="images/partner2.png" alt="" class="partner-img" /></div>
-                <div class="partner-slide" aria-hidden="true"><img src="images/partner3.png" alt="" class="partner-img" /></div>
-                <div class="partner-slide" aria-hidden="true"><img src="images/partner4.png" alt="" class="partner-img" /></div>
+                <div class="partner-slide active-1"><img src="images/partner1.png" alt="BinDawood"
+                    class="partner-img" /></div>
+                <div class="partner-slide active-2"><img src="images/partner2.png" alt="Carrefour"
+                    class="partner-img" /></div>
+                <div class="partner-slide active-3"><img src="images/partner3.png" alt="Farm" class="partner-img" />
+                </div>
+                <div class="partner-slide active-4"><img src="images/partner4.png" alt="Othaim" class="partner-img" />
+                </div>
+                <div class="partner-slide" aria-hidden="true"><img src="images/partner1.png" alt=""
+                    class="partner-img" /></div>
+                <div class="partner-slide" aria-hidden="true"><img src="images/partner2.png" alt=""
+                    class="partner-img" /></div>
+                <div class="partner-slide" aria-hidden="true"><img src="images/partner3.png" alt=""
+                    class="partner-img" /></div>
+                <div class="partner-slide" aria-hidden="true"><img src="images/partner4.png" alt=""
+                    class="partner-img" /></div>
               </div>
             </div>
             <button class="partners-next" type="button" aria-label="More partners">
