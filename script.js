@@ -53,6 +53,14 @@
       partnersTitle: "Rasmco Partners",
       partnersCopy:
         "We combine deep agricultural expertise with unmatched real estate market insight to maximize the value of your farm or ranch investment.<br><br>Our specialized knowledge ensures you make informed, profitable decisions in the agricultural land market.",
+      partnersCopy1:
+        "We combine deep agricultural expertise with unmatched real estate market insight to maximize the value of your farm or ranch investment.<br><br>Our specialized knowledge ensures you make informed, profitable decisions in the agricultural land market.",
+      partnersCopy2:
+        "Collaborating with leading retail partners like Carrefour enables wide-scale distribution of fresh, farm-grown produce with dependable consistency.<br><br>Together, we maintain stringent food safety and sustainable farm-to-shelf delivery across the region.",
+      partnersCopy3:
+        "Our strategic partnership with Farm Superstores connects high-yield domestic harvests directly with local community retail hubs.<br><br>Through integrated cold-chain operations, we preserve natural taste, freshness, and optimal nutritional quality.",
+      partnersCopy4:
+        "Supplying premier supermarket networks such as Al-Othaim Markets reinforces our commitment to national food security and self-sufficiency.<br><br>We deliver 100% natural, chemical-free agricultural produce every day to meet growing market demand.",
       followUs: "YOU CAN FOLLOW US ON",
       quickLinks: "QUICK LINKS",
       footerAbout:
@@ -103,6 +111,14 @@
       partnersTitle: "شركاء راسمكو",
       partnersCopy:
         "نجمع بين الخبرة الزراعية العميقة والرؤية الثاقبة لسوق العقار لتعظيم قيمة استثمارك الزراعي.<br><br>تضمن لك معرفتنا المتخصصة اتخاذ قرارات مدروسة ومربحة في سوق الأراضي الزراعية.",
+      partnersCopy1:
+        "نجمع بين الخبرة الزراعية العميقة والرؤية الثاقبة لسوق العقار لتعظيم قيمة استثمارك الزراعي.<br><br>تضمن لك معرفتنا المتخصصة اتخاذ قرارات مدروسة ومربحة في سوق الأراضي الزراعية.",
+      partnersCopy2:
+        "يمكّننا التعاون مع كبرى سلاسل التجزئة مثل كارفور من توزيع منتجات زراعية طازجة بمواصفات موثوقة وجودة ثابتة.<br><br>معاً نحافظ على أعلى معايير سلامة الأغذية وكفاءة التوريد المستدام من المزرعة إلى المتجر.",
+      partnersCopy3:
+        "تسهم شراكتنا الاستراتيجية مع أسواق المزرعة في ربط الحصاد الزراعي المحلي بمراكز التوزيع المجتمعية في مختلف المدن.<br><br>ومن خلال سلسلة التبريد المتقدمة، نضمن الحفاظ على النقاء الطبيعي والنضارة والقيمة الغذائية.",
+      partnersCopy4:
+        "يعزز تزويد شبكات التجزئة الرائدة مثل أسواق العثيم التزامنا الراسخ بدعم الأمن الغذائي الوطني وتحقيق الاكتفاء الذاتي.<br><br>نقدم محاصيل طبيعية 100% وخالية من المواد الكيميائية يومياً لتلبية احتياجات السوق المتنامية.",
       followUs: "يمكنكم متابعتنا عبر",
       quickLinks: "روابط سريعة",
       footerAbout:
@@ -429,7 +445,9 @@
   /* Partners Slider (partner1.png - partner4.png with auto slide & button)     */
   /* -------------------------------------------------------------------------- */
   var partnersStage = document.querySelector(".partners-stage");
+  var partnersViewport = document.querySelector(".partners-viewport");
   var partnersTrack = document.querySelector(".partners-track");
+  var partnersTextTrack = document.querySelector(".partners-text-track");
   var partnerNextBtn = document.querySelector(".partners-next");
   var partnerSlides = document.querySelectorAll(".partner-slide");
 
@@ -441,7 +459,15 @@
     function syncActiveClasses() {
       var slides = partnersTrack.querySelectorAll(".partner-slide");
       slides.forEach(function (slide, idx) {
-        slide.classList.remove("active-exit", "active-1", "active-2", "active-3", "active-4");
+        slide.classList.remove(
+          "active-exit",
+          "active-exit-2",
+          "active-exit-3",
+          "active-1",
+          "active-2",
+          "active-3",
+          "active-4"
+        );
         if (idx === 0) {
           slide.classList.add("active-1");
         } else if (idx === 1) {
@@ -455,7 +481,7 @@
     }
 
     function advancePartners(steps) {
-      if (isSliding) return;
+      if (isSliding || steps <= 0) return;
       var slides = partnersTrack.querySelectorAll(".partner-slide");
       if (slides.length < 4 + steps) return;
       isSliding = true;
@@ -464,34 +490,53 @@
       var gap = parseFloat(trackStyle.gap) || 22;
       var isRtl = document.documentElement.dir === "rtl";
 
-      // Calculate the move distance: the exact distance from slides[0] to slides[steps]
+      // Calculate move distance to bring slides[steps] to position 0
       var moveDistance = 0;
       for (var i = 0; i < steps; i++) {
         moveDistance += slides[i].offsetWidth + gap;
-        // Keep exiting slide(s) fully visible and full size as they translate left out of the box
         slides[i].classList.remove("active-1", "active-2", "active-3", "active-4");
-        slides[i].classList.add("active-exit");
+        if (i === 0) {
+          slides[i].classList.add("active-exit");
+        } else if (i === 1) {
+          slides[i].classList.add("active-exit-2");
+        } else {
+          slides[i].classList.add("active-exit-3");
+        }
       }
 
-      // Promote next slides to their target active classes
+      // Promote next slides to active-1, active-2, active-3, active-4
       for (var j = 0; j < 4; j++) {
         var targetSlide = slides[steps + j];
         if (targetSlide) {
-          targetSlide.classList.remove("active-exit", "active-1", "active-2", "active-3", "active-4");
+          targetSlide.classList.remove(
+            "active-exit",
+            "active-exit-2",
+            "active-exit-3",
+            "active-1",
+            "active-2",
+            "active-3",
+            "active-4"
+          );
           targetSlide.classList.add("active-" + (j + 1));
         }
       }
 
-      // Smoothly animate the track to slide left out of the box
+      // Smoothly animate the partner logos track
       partnersTrack.style.transition = "transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)";
       partnersTrack.style.transform = "translateX(" + (isRtl ? moveDistance : -moveDistance) + "px)";
 
+      // Smoothly animate the partner copy text track
+      if (partnersTextTrack) {
+        partnersTextTrack.style.transition = "transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)";
+        partnersTextTrack.style.transform = "translateX(" + (isRtl ? (steps * 100) : (-steps * 100)) + "%)";
+      }
+
       setTimeout(function () {
-        // Move the exited slides to the back of the track
+        // Move the exited logo slides to the back of the track
         for (var k = 0; k < steps; k++) {
           var s = partnersTrack.firstElementChild;
           if (s) {
-            s.classList.remove("active-exit");
+            s.classList.remove("active-exit", "active-exit-2", "active-exit-3");
             partnersTrack.appendChild(s);
           }
         }
@@ -499,6 +544,20 @@
         partnersTrack.style.transition = "none";
         partnersTrack.style.transform = "translateX(0)";
         void partnersTrack.offsetWidth; // force reflow
+
+        // Move exited text slides to the back of the text track
+        if (partnersTextTrack) {
+          for (var t = 0; t < steps; t++) {
+            var firstText = partnersTextTrack.firstElementChild;
+            if (firstText) {
+              partnersTextTrack.appendChild(firstText);
+            }
+          }
+          partnersTextTrack.style.transition = "none";
+          partnersTextTrack.style.transform = "translateX(0)";
+          void partnersTextTrack.offsetWidth;
+        }
+
         syncActiveClasses();
         isSliding = false;
       }, 720);
@@ -521,7 +580,15 @@
       partnersTrack.insertBefore(lastSlide, partnersTrack.firstElementChild);
 
       // Temporarily give lastSlide the active-1 size to measure offset
-      lastSlide.classList.remove("active-exit", "active-1", "active-2", "active-3", "active-4");
+      lastSlide.classList.remove(
+        "active-exit",
+        "active-exit-2",
+        "active-exit-3",
+        "active-1",
+        "active-2",
+        "active-3",
+        "active-4"
+      );
       lastSlide.classList.add("active-1");
 
       var trackStyle = window.getComputedStyle(partnersTrack);
@@ -532,6 +599,19 @@
       partnersTrack.style.transition = "none";
       partnersTrack.style.transform = "translateX(" + (isRtl ? moveDistance : -moveDistance) + "px)";
       void partnersTrack.offsetWidth; // force reflow
+
+      // Prepend last text slide in text track
+      if (partnersTextTrack) {
+        var lastText = partnersTextTrack.lastElementChild;
+        if (lastText) {
+          partnersTextTrack.insertBefore(lastText, partnersTextTrack.firstElementChild);
+          partnersTextTrack.style.transition = "none";
+          partnersTextTrack.style.transform = "translateX(" + (isRtl ? "100%" : "-100%") + ")";
+          void partnersTextTrack.offsetWidth;
+          partnersTextTrack.style.transition = "transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)";
+          partnersTextTrack.style.transform = "translateX(0)";
+        }
+      }
 
       // Demote current slides
       if (slides[0]) {
@@ -560,21 +640,6 @@
       }, 720);
     }
 
-    // Click on active partner logos to slide to them
-    partnersTrack.addEventListener("click", function (e) {
-      var partnerImg = e.target.closest(".partner-img");
-      if (!partnerImg) return;
-      var slide = partnerImg.closest(".partner-slide");
-      if (!slide) return;
-
-      var currentSlides = Array.from(partnersTrack.querySelectorAll(".partner-slide"));
-      var position = currentSlides.indexOf(slide);
-      if (position > 0 && position < 4) {
-        advancePartners(position);
-        resetAutoSlide();
-      }
-    });
-
     function startAutoSlide() {
       stopAutoSlide();
       autoSlideTimer = setInterval(function () {
@@ -594,56 +659,137 @@
       startAutoSlide();
     }
 
+    // Next button click handler
     if (partnerNextBtn) {
-      partnerNextBtn.addEventListener("click", function () {
+      partnerNextBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         nextPartner();
         resetAutoSlide();
       });
     }
 
-    // Pause auto slide on mouse hover
+    // Pause on hover
     if (partnersStage) {
       partnersStage.addEventListener("mouseenter", stopAutoSlide);
       partnersStage.addEventListener("mouseleave", startAutoSlide);
+    }
 
-      // Mobile Touch Gestures (Swipe to slide)
-      var touchStartX = 0;
-      var touchStartY = 0;
-      var touchEndX = 0;
-      var touchEndY = 0;
+    // Drag & Click handling directly on partnersViewport (isolated from next button)
+    if (partnersViewport) {
+      var isDragging = false;
+      var hasDragged = false;
+      var startX = 0;
+      var startY = 0;
+      var lastDiffX = 0;
+      var pointerDownId = null;
 
-      partnersStage.addEventListener("touchstart", function (e) {
-        if (e.touches && e.touches.length === 1) {
-          touchStartX = e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
-          touchEndX = touchStartX;
-          touchEndY = touchStartY;
-          stopAutoSlide();
-        }
-      }, { passive: true });
+      partnersViewport.addEventListener("pointerdown", function (e) {
+        if (isSliding) return;
+        if (e.button !== undefined && e.button !== 0) return;
 
-      partnersStage.addEventListener("touchmove", function (e) {
-        if (e.touches && e.touches.length === 1) {
-          touchEndX = e.touches[0].clientX;
-          touchEndY = e.touches[0].clientY;
-        }
-      }, { passive: true });
+        isDragging = true;
+        hasDragged = false;
+        startX = e.clientX;
+        startY = e.clientY;
+        lastDiffX = 0;
+        pointerDownId = e.pointerId;
+        stopAutoSlide();
+      });
 
-      partnersStage.addEventListener("touchend", function () {
-        var diffX = touchEndX - touchStartX;
-        var diffY = touchEndY - touchStartY;
-        var isRtl = document.documentElement.dir === "rtl";
-        var threshold = 35; // minimum horizontal swipe distance
+      partnersViewport.addEventListener("pointermove", function (e) {
+        if (!isDragging || isSliding) return;
 
-        // Only trigger if horizontal swipe is greater than vertical movement
-        if (Math.abs(diffX) > threshold && Math.abs(diffX) > Math.abs(diffY)) {
-          if ((!isRtl && diffX < 0) || (isRtl && diffX > 0)) {
-            nextPartner();
-          } else {
-            prevPartner();
+        var diffX = e.clientX - startX;
+        var diffY = e.clientY - startY;
+
+        if (!hasDragged) {
+          // If vertical scrolling on touch, cancel horizontal drag
+          if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 8) {
+            isDragging = false;
+            return;
+          }
+          // Only start dragging once horizontal movement exceeds threshold
+          if (Math.abs(diffX) > 8) {
+            hasDragged = true;
+            partnersViewport.classList.add("is-dragging");
+            try {
+              partnersViewport.setPointerCapture(pointerDownId);
+            } catch (err) {}
           }
         }
-        resetAutoSlide();
+
+        if (hasDragged) {
+          lastDiffX = diffX;
+          var isRtl = document.documentElement.dir === "rtl";
+          var visualOffset = diffX;
+          // Apply slight resistance when dragging backwards
+          if ((!isRtl && diffX > 0) || (isRtl && diffX < 0)) {
+            visualOffset = diffX * 0.35;
+          }
+          partnersTrack.style.transition = "none";
+          partnersTrack.style.transform = "translateX(" + visualOffset + "px)";
+
+          if (partnersTextTrack && partnersViewport) {
+            var textDragPct = (visualOffset / partnersViewport.offsetWidth) * 100;
+            partnersTextTrack.style.transition = "none";
+            partnersTextTrack.style.transform = "translateX(" + textDragPct + "%)";
+          }
+        }
+      });
+
+      function endDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        partnersViewport.classList.remove("is-dragging");
+        try {
+          if (pointerDownId !== null) {
+            partnersViewport.releasePointerCapture(pointerDownId);
+          }
+        } catch (err) {}
+
+        if (hasDragged) {
+          var isRtl = document.documentElement.dir === "rtl";
+          var threshold = 40;
+
+          if ((!isRtl && lastDiffX < -threshold) || (isRtl && lastDiffX > threshold)) {
+            nextPartner();
+          } else if ((!isRtl && lastDiffX > threshold) || (isRtl && lastDiffX < -threshold)) {
+            prevPartner();
+          } else {
+            // Dragged under threshold: smoothly snap back
+            partnersTrack.style.transition = "transform 0.35s cubic-bezier(0.25, 1, 0.5, 1)";
+            partnersTrack.style.transform = "translateX(0)";
+            if (partnersTextTrack) {
+              partnersTextTrack.style.transition = "transform 0.35s cubic-bezier(0.25, 1, 0.5, 1)";
+              partnersTextTrack.style.transform = "translateX(0)";
+            }
+          }
+          resetAutoSlide();
+        }
+      }
+
+      partnersViewport.addEventListener("pointerup", endDrag);
+      partnersViewport.addEventListener("pointercancel", endDrag);
+
+      // Click on partner slides to advance to that active position
+      partnersViewport.addEventListener("click", function (e) {
+        if (hasDragged) {
+          e.preventDefault();
+          e.stopPropagation();
+          hasDragged = false;
+          return;
+        }
+
+        var slide = e.target.closest(".partner-slide");
+        if (!slide) return;
+
+        var currentSlides = Array.from(partnersTrack.querySelectorAll(".partner-slide"));
+        var position = currentSlides.indexOf(slide);
+        if (position > 0 && position < 4) {
+          advancePartners(position);
+          resetAutoSlide();
+        }
       });
     }
 
@@ -651,6 +797,10 @@
       if (!isSliding) {
         partnersTrack.style.transition = "none";
         partnersTrack.style.transform = "translateX(0)";
+        if (partnersTextTrack) {
+          partnersTextTrack.style.transition = "none";
+          partnersTextTrack.style.transform = "translateX(0)";
+        }
       }
     }
 
@@ -663,6 +813,10 @@
       if (!isSliding) {
         partnersTrack.style.transition = "none";
         partnersTrack.style.transform = "translateX(0)";
+        if (partnersTextTrack) {
+          partnersTextTrack.style.transition = "none";
+          partnersTextTrack.style.transform = "translateX(0)";
+        }
         syncActiveClasses();
       }
     };
