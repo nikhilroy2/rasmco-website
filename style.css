@@ -854,6 +854,7 @@ a {
   min-height: 325px;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .partners-track {
@@ -861,8 +862,8 @@ a {
   align-items: center;
   gap: 22px;
   width: max-content;
-  margin-inline: auto;
-  transition: transform 0.7s linear;
+  margin: 0;
+  transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
 }
 
@@ -882,10 +883,10 @@ a {
   width: auto;
   max-width: none;
   object-fit: contain;
-  transition: height 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+  transition: height 0.7s cubic-bezier(0.25, 1, 0.5, 1),
     filter 0.6s ease,
     transform 0.3s ease,
-    opacity 0.5s ease;
+    opacity 0.6s ease;
   user-select: none;
   -webkit-user-drag: none;
   opacity: 0;
@@ -895,13 +896,22 @@ a {
   cursor: pointer;
 }
 
-/* Strictly the 4 active slides are visible */
+/* Strictly the active and exiting slides are visible */
+.partner-slide.active-exit .partner-img,
 .partner-slide.active-1 .partner-img,
 .partner-slide.active-2 .partner-img,
 .partner-slide.active-3 .partner-img,
 .partner-slide.active-4 .partner-img {
   visibility: visible;
   pointer-events: auto;
+}
+
+/* Exiting logo: stays full size (same as active-1) so it smoothly slides out */
+.partner-slide.active-exit .partner-img {
+  height: 295px;
+  opacity: 1;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.11));
+  pointer-events: none;
 }
 
 /* 1st logo: Active 1 - Even bigger (295px) */
@@ -974,6 +984,7 @@ a {
     height: 85px;
   }
 
+  .partner-slide.active-exit .partner-img,
   .partner-slide.active-1 .partner-img {
     height: 230px;
   }
@@ -1018,6 +1029,7 @@ a {
     height: 85px;
   }
 
+  .partner-slide.active-exit .partner-img,
   .partner-slide.active-1 .partner-img {
     height: 230px;
   }
@@ -1055,6 +1067,7 @@ a {
     height: 68px;
   }
 
+  .partner-slide.active-exit .partner-img,
   .partner-slide.active-1 .partner-img {
     height: 180px;
   }
@@ -1096,6 +1109,7 @@ a {
     height: 52px;
   }
 
+  .partner-slide.active-exit .partner-img,
   .partner-slide.active-1 .partner-img {
     height: 135px;
   }
@@ -1135,6 +1149,7 @@ a {
     height: 44px;
   }
 
+  .partner-slide.active-exit .partner-img,
   .partner-slide.active-1 .partner-img {
     height: 112px;
   }

@@ -434,157 +434,145 @@
   var partnerSlides = document.querySelectorAll(".partner-slide");
 
   if (partnersTrack && partnerSlides.length > 0) {
-    var baseCount = 4; // 4 unique partner logos
-    var currentStep = 0;
     var isSliding = false;
     var autoSlideDelay = 3000;
     var autoSlideTimer = null;
 
-    function updateActiveClasses(stepIndex) {
-      partnerSlides.forEach(function (slide, idx) {
-        slide.classList.remove("active-1", "active-2", "active-3", "active-4");
-        var pos = idx - stepIndex;
-        if (pos === 0) {
+    function syncActiveClasses() {
+      var slides = partnersTrack.querySelectorAll(".partner-slide");
+      slides.forEach(function (slide, idx) {
+        slide.classList.remove("active-exit", "active-1", "active-2", "active-3", "active-4");
+        if (idx === 0) {
           slide.classList.add("active-1");
-        } else if (pos === 1) {
+        } else if (idx === 1) {
           slide.classList.add("active-2");
-        } else if (pos === 2) {
+        } else if (idx === 2) {
           slide.classList.add("active-3");
-        } else if (pos === 3) {
+        } else if (idx === 3) {
           slide.classList.add("active-4");
         }
       });
     }
 
-    var baseWidths = [];
+    function advancePartners(steps) {
+      if (isSliding) return;
+      var slides = partnersTrack.querySelectorAll(".partner-slide");
+      if (slides.length < 4 + steps) return;
+      isSliding = true;
 
-    function measureBaseWidths() {
-      baseWidths = [];
-      var lastImg = partnerSlides[partnerSlides.length - 1].querySelector("img");
-      var naturalRatio = (lastImg && lastImg.naturalWidth && lastImg.naturalHeight)
-        ? (lastImg.naturalWidth / lastImg.naturalHeight)
-        : 0.866;
-      var baseH = parseFloat(window.getComputedStyle(lastImg || partnerSlides[partnerSlides.length - 1]).height) || 100;
-      var fallbackW = Math.round(baseH * naturalRatio);
-
-      for (var i = 0; i < baseCount; i++) {
-        // Clones 4, 5, 6, 7 are in base state, providing the exact base inactive width
-        var cloneSlide = partnerSlides[baseCount + i];
-        var w = (cloneSlide && cloneSlide.offsetWidth > 0) ? cloneSlide.offsetWidth : fallbackW;
-        baseWidths.push(w);
-      }
-    }
-
-    function getStepOffset(stepIndex) {
-      if (stepIndex === 0) return 0;
       var trackStyle = window.getComputedStyle(partnersTrack);
       var gap = parseFloat(trackStyle.gap) || 22;
-
-      var offset = 0;
-      for (var i = 0; i < stepIndex; i++) {
-        var w = (baseWidths[i % baseCount] && baseWidths[i % baseCount] > 0)
-          ? baseWidths[i % baseCount]
-          : 87;
-        offset += w + gap;
-      }
-      return offset;
-    }
-
-    function applyTransform(stepIndex, animated) {
-      var offset = getStepOffset(stepIndex);
       var isRtl = document.documentElement.dir === "rtl";
-      partnersTrack.style.transition = animated
-        ? "transform 0.7s linear"
-        : "none";
-      partnersTrack.style.transform =
-        "translateX(" + (isRtl ? offset : -offset) + "px)";
-    }
 
-    function finishPartnerMove(targetStep) {
+      // Calculate the move distance: the exact distance from slides[0] to slides[steps]
+      var moveDistance = 0;
+      for (var i = 0; i < steps; i++) {
+        moveDistance += slides[i].offsetWidth + gap;
+        // Keep exiting slide(s) fully visible and full size as they translate left out of the box
+        slides[i].classList.remove("active-1", "active-2", "active-3", "active-4");
+        slides[i].classList.add("active-exit");
+      }
+
+      // Promote next slides to their target active classes
+      for (var j = 0; j < 4; j++) {
+        var targetSlide = slides[steps + j];
+        if (targetSlide) {
+          targetSlide.classList.remove("active-exit", "active-1", "active-2", "active-3", "active-4");
+          targetSlide.classList.add("active-" + (j + 1));
+        }
+      }
+
+      // Smoothly animate the track to slide left out of the box
+      partnersTrack.style.transition = "transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)";
+      partnersTrack.style.transform = "translateX(" + (isRtl ? moveDistance : -moveDistance) + "px)";
+
       setTimeout(function () {
-        currentStep = targetStep % baseCount;
-        updateActiveClasses(currentStep);
-        applyTransform(currentStep, false);
-        void partnersTrack.offsetWidth;
+        // Move the exited slides to the back of the track
+        for (var k = 0; k < steps; k++) {
+          var s = partnersTrack.firstElementChild;
+          if (s) {
+            s.classList.remove("active-exit");
+            partnersTrack.appendChild(s);
+          }
+        }
+        // Seamlessly reset track transform back to 0 without transition
+        partnersTrack.style.transition = "none";
+        partnersTrack.style.transform = "translateX(0)";
+        void partnersTrack.offsetWidth; // force reflow
+        syncActiveClasses();
         isSliding = false;
       }, 720);
     }
 
-    function selectPartner(position) {
-      var targetStep = currentStep + position;
-      if (isSliding || targetStep === currentStep) return;
-
-      isSliding = true;
-      updateActiveClasses(targetStep);
-      applyTransform(targetStep, true);
-      finishPartnerMove(targetStep);
-    }
-
     function nextPartner() {
-      if (isSliding) return;
-      isSliding = true;
-
-      currentStep++;
-      updateActiveClasses(currentStep);
-      applyTransform(currentStep, true);
-
-      // If we reached the end of the 4 original slides, seamlessly reset to 0
-      if (currentStep >= baseCount) {
-        finishPartnerMove(currentStep);
-      } else {
-        setTimeout(function () {
-          isSliding = false;
-        }, 720);
-      }
+      advancePartners(1);
     }
 
     function prevPartner() {
       if (isSliding) return;
+      var slides = partnersTrack.querySelectorAll(".partner-slide");
+      if (slides.length < 4) return;
       isSliding = true;
 
-      if (currentStep === 0) {
-        // Seamlessly snap to baseCount clone (looks identical to 0), then animate back to baseCount - 1
-        currentStep = baseCount;
-        updateActiveClasses(baseCount);
-        applyTransform(baseCount, false);
-        void partnersTrack.offsetWidth; // Force reflow
+      var lastSlide = partnersTrack.lastElementChild;
+      var isRtl = document.documentElement.dir === "rtl";
 
-        setTimeout(function () {
-          currentStep = baseCount - 1;
-          updateActiveClasses(currentStep);
-          applyTransform(currentStep, true);
-          setTimeout(function () {
-            isSliding = false;
-          }, 720);
-        }, 20);
-      } else {
-        currentStep--;
-        updateActiveClasses(currentStep);
-        applyTransform(currentStep, true);
-        setTimeout(function () {
-          isSliding = false;
-        }, 720);
+      // Prepend lastSlide so it enters from the edge
+      partnersTrack.insertBefore(lastSlide, partnersTrack.firstElementChild);
+
+      // Temporarily give lastSlide the active-1 size to measure offset
+      lastSlide.classList.remove("active-exit", "active-1", "active-2", "active-3", "active-4");
+      lastSlide.classList.add("active-1");
+
+      var trackStyle = window.getComputedStyle(partnersTrack);
+      var gap = parseFloat(trackStyle.gap) || 22;
+      var moveDistance = lastSlide.offsetWidth + gap;
+
+      // Immediately offset track so lastSlide is outside the viewport without animation
+      partnersTrack.style.transition = "none";
+      partnersTrack.style.transform = "translateX(" + (isRtl ? moveDistance : -moveDistance) + "px)";
+      void partnersTrack.offsetWidth; // force reflow
+
+      // Demote current slides
+      if (slides[0]) {
+        slides[0].classList.remove("active-1");
+        slides[0].classList.add("active-2");
       }
+      if (slides[1]) {
+        slides[1].classList.remove("active-2");
+        slides[1].classList.add("active-3");
+      }
+      if (slides[2]) {
+        slides[2].classList.remove("active-3");
+        slides[2].classList.add("active-4");
+      }
+      if (slides[3]) {
+        slides[3].classList.remove("active-4");
+      }
+
+      // Smoothly animate track back to 0
+      partnersTrack.style.transition = "transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)";
+      partnersTrack.style.transform = "translateX(0)";
+
+      setTimeout(function () {
+        syncActiveClasses();
+        isSliding = false;
+      }, 720);
     }
 
-    partnerSlides.forEach(function (slide) {
-      var partnerImage = slide.querySelector(".partner-img");
-      if (!partnerImage) return;
+    // Click on active partner logos to slide to them
+    partnersTrack.addEventListener("click", function (e) {
+      var partnerImg = e.target.closest(".partner-img");
+      if (!partnerImg) return;
+      var slide = partnerImg.closest(".partner-slide");
+      if (!slide) return;
 
-      partnerImage.addEventListener("click", function () {
-        var position = -1;
-        ["active-1", "active-2", "active-3", "active-4"].some(function (className, index) {
-          if (slide.classList.contains(className)) {
-            position = index;
-            return true;
-          }
-          return false;
-        });
-        if (position >= 0) {
-          selectPartner(position);
-          resetAutoSlide();
-        }
-      });
+      var currentSlides = Array.from(partnersTrack.querySelectorAll(".partner-slide"));
+      var position = currentSlides.indexOf(slide);
+      if (position > 0 && position < 4) {
+        advancePartners(position);
+        resetAutoSlide();
+      }
     });
 
     function startAutoSlide() {
@@ -660,23 +648,26 @@
     }
 
     function handleResize() {
-      measureBaseWidths();
-      applyTransform(currentStep, false);
+      if (!isSliding) {
+        partnersTrack.style.transition = "none";
+        partnersTrack.style.transform = "translateX(0)";
+      }
     }
 
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
-    window.addEventListener("load", handleResize);
 
     var prevApplyLang = applyLang;
     applyLang = function (lang) {
       prevApplyLang(lang);
-      handleResize();
+      if (!isSliding) {
+        partnersTrack.style.transition = "none";
+        partnersTrack.style.transform = "translateX(0)";
+        syncActiveClasses();
+      }
     };
 
-    measureBaseWidths();
-    updateActiveClasses(0);
-    applyTransform(0, false);
+    syncActiveClasses();
     startAutoSlide();
   }
 })();
