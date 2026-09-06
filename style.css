@@ -697,8 +697,25 @@ a {
 .sector-item {
   gap: 28px;
   margin-bottom: 28px;
+  padding: 18px 22px;
+  border-left: 3px solid transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   position: relative;
   z-index: 1;
+}
+
+.sector-item:hover,
+.sector-item:focus-within,
+.sector-item.active {
+  background: rgba(255, 255, 255, 0.72);
+  border-left-color: var(--gold);
+  transform: translateX(6px);
+}
+
+.sector-item:first-child:hover,
+.sector-item:first-child:focus-within,
+.sector-item:first-child.active {
+  border-left-color: #739c5d;
 }
 
 .sector-logo {
@@ -725,6 +742,12 @@ a {
 
 .read-more-link:hover {
   color: #0000cc;
+}
+
+.read-more-link.is-disabled {
+  cursor: default;
+  opacity: 0.58;
+  text-decoration: none;
 }
 
 .sectors-visual {

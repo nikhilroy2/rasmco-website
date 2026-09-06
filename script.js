@@ -272,6 +272,27 @@
   }
 
   /* -------------------------------------------------------------------------- */
+  /* Sector Rollover                                                            */
+  /* -------------------------------------------------------------------------- */
+  var sectorItems = document.querySelectorAll(".sector-item");
+
+  sectorItems.forEach(function (sectorItem) {
+    sectorItem.addEventListener("mouseenter", function () {
+      sectorItems.forEach(function (item) {
+        item.classList.remove("active");
+      });
+      sectorItem.classList.add("active");
+    });
+
+    sectorItem.addEventListener("mouseleave", function () {
+      sectorItems.forEach(function (item) {
+        item.classList.remove("active");
+      });
+      if (sectorItems[0]) sectorItems[0].classList.add("active");
+    });
+  });
+
+  /* -------------------------------------------------------------------------- */
   /* Rasmco In Numbers Count-up                                                */
   /* -------------------------------------------------------------------------- */
   var numbersSection = document.getElementById("goals");
