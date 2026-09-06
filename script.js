@@ -272,6 +272,75 @@
   }
 
   /* -------------------------------------------------------------------------- */
+  /* Rasmco In Numbers Count-up                                                */
+  /* -------------------------------------------------------------------------- */
+  var numbersSection = document.getElementById("goals");
+  var statValues = Array.prototype.slice.call(document.querySelectorAll(".stat-value"));
+  var hasCountedNumbers = false;
+
+  function formatStatNumber(value) {
+    return Math.round(value).toLocaleString("en-US");
+  }
+
+  function countStat(statValue) {
+    var numberTextNode = Array.prototype.slice.call(statValue.childNodes).find(function (node) {
+      return node.nodeType === 3 && /\d/.test(node.nodeValue);
+    });
+    if (!numberTextNode) return;
+
+    var target = parseInt(statValue.dataset.countTarget, 10);
+    if (!target) return;
+
+    var trailingSpace = /\s$/.test(numberTextNode.nodeValue) ? " " : "";
+    numberTextNode.nodeValue = "0" + trailingSpace;
+    var startTime = null;
+    var duration = 1600;
+
+    function updateCount(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var easedProgress = 1 - Math.pow(1 - progress, 3);
+      numberTextNode.nodeValue = formatStatNumber(target * easedProgress) + trailingSpace;
+
+      if (progress < 1) {
+        window.requestAnimationFrame(updateCount);
+      }
+    }
+
+    window.requestAnimationFrame(updateCount);
+  }
+
+  function startNumbersCount() {
+    if (hasCountedNumbers) return;
+    hasCountedNumbers = true;
+    statValues.forEach(countStat);
+  }
+
+  if (numbersSection && statValues.length) {
+    statValues.forEach(function (statValue) {
+      var numberTextNode = Array.prototype.slice.call(statValue.childNodes).find(function (node) {
+        return node.nodeType === 3 && /\d/.test(node.nodeValue);
+      });
+      if (numberTextNode) {
+        statValue.dataset.countTarget = numberTextNode.nodeValue.replace(/[^\d]/g, "");
+        numberTextNode.nodeValue = "0" + (/\s$/.test(numberTextNode.nodeValue) ? " " : "");
+      }
+    });
+
+    if ("IntersectionObserver" in window) {
+      var numbersObserver = new IntersectionObserver(function (entries, observer) {
+        if (entries.some(function (entry) { return entry.isIntersecting; })) {
+          startNumbersCount();
+          observer.disconnect();
+        }
+      }, { threshold: 0.35 });
+      numbersObserver.observe(numbersSection);
+    } else {
+      startNumbersCount();
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
   /* Why Choose Us Tabs                                                         */
   /* -------------------------------------------------------------------------- */
   var tabs = document.querySelectorAll(".why-tab");
