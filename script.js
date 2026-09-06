@@ -315,12 +315,12 @@
     var trailingSpace = /\s$/.test(numberTextNode.nodeValue) ? " " : "";
     numberTextNode.nodeValue = "0" + trailingSpace;
     var startTime = null;
-    var duration = 1600;
+    var duration = 5000;
 
     function updateCount(timestamp) {
       if (!startTime) startTime = timestamp;
       var progress = Math.min((timestamp - startTime) / duration, 1);
-      var easedProgress = 1 - Math.pow(1 - progress, 3);
+      var easedProgress = 1 - Math.pow(1 - progress, 4);
       numberTextNode.nodeValue = formatStatNumber(target * easedProgress) + trailingSpace;
 
       if (progress < 1) {
@@ -387,6 +387,7 @@
     });
     whySlideIndicators.forEach(function (indicator, indicatorIndex) {
       indicator.classList.toggle("active_slide", indicatorIndex === whySlideIndex);
+      indicator.setAttribute("aria-pressed", indicatorIndex === whySlideIndex ? "true" : "false");
     });
   }
 
@@ -405,6 +406,21 @@
       }, whyAutoSlideDelay);
     }
   }
+
+  whySlideIndicators.forEach(function (indicator, index) {
+    indicator.addEventListener("click", function () {
+      setWhySlide(index);
+      startWhyAutoSlide();
+    });
+
+    indicator.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        setWhySlide(index);
+        startWhyAutoSlide();
+      }
+    });
+  });
 
   setWhySlide(whySlideIndex);
   startWhyAutoSlide();
