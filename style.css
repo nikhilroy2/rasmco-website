@@ -67,13 +67,16 @@ a {
   width: 100%;
   height: 100%;
   background-position: center top;
-  background-size: cover;
+  background-size: 180% 100%;
   background-repeat: no-repeat;
   will-change: transform;
   transform: translateX(100%);
   visibility: hidden;
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 0;
+  @media (min-width: 768px){
+    background-size: cover;
+  }
 }
 
 .hero-bg-slide.active {
@@ -355,13 +358,16 @@ a {
 .hero-notch {
   position: absolute;
   left: 50%;
-  bottom: -42px;
   width: 147px;
+  bottom: -28px;
   height: 43px;
   transform: translateX(-50%);
   background: var(--gold);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   z-index: 4;
+  @media (min-width: 768px){
+      bottom: -42px;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -422,6 +428,16 @@ a {
   color: var(--white);
 }
 
+.btn-gold:focus,
+.btn-gold:focus-visible,
+.btn-gold:active {
+  background: var(--gold-btn) !important;
+  color: var(--white) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
 .who-visual {
   display: flex;
   justify-content: center;
@@ -455,7 +471,11 @@ a {
   font-weight: 300;
   line-height: 25px;
   max-width: 1296px;
-  margin: 0 auto 28px;
+    margin: 0 auto 0px;
+
+  @media (min-width: 768px){
+    margin: 0 auto 28px;
+  }
 }
 
 .numbers-intro strong {
@@ -464,8 +484,11 @@ a {
 
 .numbers-stage {
   position: relative;
-  min-height: 340px;
-  padding: 20px 0 10px;
+  min-height: 0;
+  @media (min-width: 768px){
+    min-height: 340px;
+  }
+  /* padding: 20px 0 10px; */
 }
 
 .numbers-grid {
@@ -526,11 +549,14 @@ a {
 
 .why-section {
   position: relative;
-  padding: 70px 0 40px;
+  padding: 20px 0 10px;
   background-color: var(--white);
   background-image: radial-gradient(#dcdcdc 1px, transparent 1.2px);
   background-size: 8px 8px;
   background-position: 0 120px;
+  @media (min-width: 992px){
+      padding: 70px 0 40px;
+  }
 }
 
 .why-section::before {
@@ -786,7 +812,7 @@ a {
 .sectors-visual img {
   max-width: 418px;
   height: 350px;
-  @media (min-width: 776px){
+  @media (min-width: 768px){
     height: auto;
   }
 }
@@ -836,7 +862,7 @@ a {
   gap: 22px;
   width: max-content;
   margin-inline: auto;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.7s linear;
   will-change: transform;
 }
 
@@ -866,6 +892,7 @@ a {
   visibility: hidden;
   pointer-events: none;
   display: block;
+  cursor: pointer;
 }
 
 /* Strictly the 4 active slides are visible */
@@ -1208,11 +1235,14 @@ a {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 10px 14px;
   color: var(--gold-footer);
   font-size: 21.91px;
   font-weight: 300;
+  @media (min-width: 768px){
+    justify-content: center;
+  }
 }
 
 .footer-nav a {

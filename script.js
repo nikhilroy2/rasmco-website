@@ -494,10 +494,30 @@
       var offset = getStepOffset(stepIndex);
       var isRtl = document.documentElement.dir === "rtl";
       partnersTrack.style.transition = animated
-        ? "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)"
+        ? "transform 0.7s linear"
         : "none";
       partnersTrack.style.transform =
         "translateX(" + (isRtl ? offset : -offset) + "px)";
+    }
+
+    function finishPartnerMove(targetStep) {
+      setTimeout(function () {
+        currentStep = targetStep % baseCount;
+        updateActiveClasses(currentStep);
+        applyTransform(currentStep, false);
+        void partnersTrack.offsetWidth;
+        isSliding = false;
+      }, 720);
+    }
+
+    function selectPartner(position) {
+      var targetStep = currentStep + position;
+      if (isSliding || targetStep === currentStep) return;
+
+      isSliding = true;
+      updateActiveClasses(targetStep);
+      applyTransform(targetStep, true);
+      finishPartnerMove(targetStep);
     }
 
     function nextPartner() {
@@ -510,17 +530,11 @@
 
       // If we reached the end of the 4 original slides, seamlessly reset to 0
       if (currentStep >= baseCount) {
-        setTimeout(function () {
-          currentStep = 0;
-          updateActiveClasses(0);
-          applyTransform(0, false);
-          void partnersTrack.offsetWidth; // Force reflow
-          isSliding = false;
-        }, 620);
+        finishPartnerMove(currentStep);
       } else {
         setTimeout(function () {
           isSliding = false;
-        }, 620);
+        }, 720);
       }
     }
 
@@ -541,7 +555,7 @@
           applyTransform(currentStep, true);
           setTimeout(function () {
             isSliding = false;
-          }, 620);
+          }, 720);
         }, 20);
       } else {
         currentStep--;
@@ -549,9 +563,29 @@
         applyTransform(currentStep, true);
         setTimeout(function () {
           isSliding = false;
-        }, 620);
+        }, 720);
       }
     }
+
+    partnerSlides.forEach(function (slide) {
+      var partnerImage = slide.querySelector(".partner-img");
+      if (!partnerImage) return;
+
+      partnerImage.addEventListener("click", function () {
+        var position = -1;
+        ["active-1", "active-2", "active-3", "active-4"].some(function (className, index) {
+          if (slide.classList.contains(className)) {
+            position = index;
+            return true;
+          }
+          return false;
+        });
+        if (position >= 0) {
+          selectPartner(position);
+          resetAutoSlide();
+        }
+      });
+    });
 
     function startAutoSlide() {
       stopAutoSlide();
