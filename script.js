@@ -288,6 +288,33 @@
   }
 
   /* -------------------------------------------------------------------------- */
+  /* Who We Are Scroll Reveal Animation                                        */
+  /* -------------------------------------------------------------------------- */
+  var whoSection = document.querySelector(".who-section");
+  if (whoSection) {
+    var revealWho = function () {
+      whoSection.classList.add("is-visible");
+    };
+
+    if ("IntersectionObserver" in window) {
+      var whoObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              revealWho();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+      whoObserver.observe(whoSection);
+    } else {
+      revealWho();
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
   /* Sector Rollover                                                            */
   /* -------------------------------------------------------------------------- */
   var sectorItems = document.querySelectorAll(".sector-item");
