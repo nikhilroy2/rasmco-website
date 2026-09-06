@@ -20,7 +20,13 @@
   </head>
   <body>
     <section class="hero" id="home">
-      <div class="hero-bg"></div>
+      <div class="hero-bg" id="heroBgCarousel" aria-hidden="true">
+        <div class="hero-bg-slide active" style="background-image: url('images/hero-bg.jpg');"></div>
+        <div class="hero-bg-slide" style="background-image: url('images/hero-bg.jpg');"></div>
+        <div class="hero-bg-slide" style="background-image: url('images/hero-bg.jpg');"></div>
+        <div class="hero-bg-slide" style="background-image: url('images/hero-bg.jpg');"></div>
+        <div class="hero-bg-slide" style="background-image: url('images/hero-bg.jpg');"></div>
+      </div>
       <div class="hero-overlay"></div>
       <svg class="hero-hexagon" viewBox="0 0 640 740" aria-hidden="true">
         <polygon
@@ -103,8 +109,8 @@
           </svg>
         </a>
         <div class="hero-dots d-flex" id="heroDots" role="tablist" aria-label="Hero slides">
-          <button class="dot" type="button" aria-label="Slide 1"></button>
-          <button class="dot active" type="button" aria-label="Slide 2"></button>
+          <button class="dot active" type="button" aria-label="Slide 1"></button>
+          <button class="dot" type="button" aria-label="Slide 2"></button>
           <button class="dot" type="button" aria-label="Slide 3"></button>
           <button class="dot" type="button" aria-label="Slide 4"></button>
           <button class="dot" type="button" aria-label="Slide 5"></button>
@@ -399,161 +405,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script>
-      (function () {
-        var i18n = {
-          en: {
-            navAbout: "About Us",
-            navSubsidiaries: "Subsidiaries",
-            navGoals: "Our Goals",
-            navAffiliations: "Affiliations",
-            navPartners: "Partners",
-            navContact: "Contact Us",
-            heroTitle: "We Cultivate Glory, We Craft Pride<br>We Build the Nation",
-            heroDownload: "Click here to download company profile",
-            whoTitle: "Who We Are?",
-            whoCopy:
-              "<strong>RASMCO Group</strong> is a leading Saudi economic ecosystem established in 1987, pioneering strategic integration across <strong>Agriculture, Industry, and Real Estate.</strong> Aligned with <strong>Saudi Vision 2030,</strong> we operate <strong>+30 million m²</strong> of agricultural land to achieve <strong>year-round self-sufficiency</strong> with <strong>100% natural, chemical-free produce and an annual yield exceeding 250,000 tons.</strong> Anchored by the <strong>Kingdom’s largest 33,000 m² industrial complex,</strong> a modern cold-chain logistics fleet, and a <strong>Zero Industrial Waste</strong> mandate, we combine scale with absolute sustainability. Today, we extend our expertise across <strong>neighboring Arab markets,</strong> delivering <strong>Saudi-made</strong> produce and industrial solutions built on trust, quality, and sustainable innovation.",
-            readMore: "Read More",
-            numbersTitle: "Rasmco In Numbers",
-            numbersIntro:
-              "<strong>RASMCO Group</strong> is a leading economic ecosystem in the Kingdom, driving strategic integration across three sectors: Agriculture, Industry, and Real Estate.",
-            stat1: "Total Farmland Area",
-            stat2: "Annual Agricultural Output",
-            stat3: "Advanced Industrial Complex Area",
-            stat4: "Annual Industrial Production Capacity",
-            whyTitle: "Why Choose Us?",
-            whyLead:
-              "We combine deep agricultural expertise with unmatched real estate market insight to maximize the value of your farm or ranch investment. Our specialized knowledge ensures you make informed, profitable decisions in the agricultural land market.",
-            whyExpTitle: "Experience",
-            whyProdTitle: "Products",
-            whyDelTitle: "Delivery",
-            whyPriceTitle: "Pricing",
-            whyLorem:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            sectorsTitle: "Rasmco Group Sectors",
-            sectorAgri:
-              "Massive national production supporting the highest standards of biosecurity and sustainable quality",
-            sectorInd:
-              "An integrated industrial complex featuring state-of-the-art global production lines and advanced automated abattoirs with MAP smart packaging to ensure 100% natural purity",
-            sectorRe:
-              "The engineering pillar constructing and developing the group's facilities and logistics hubs",
-            partnersTitle: "Rasmco Partners",
-            partnersCopy:
-              "We combine deep agricultural expertise with unmatched real estate market insight to maximize the value of your farm or ranch investment.<br><br>Our specialized knowledge ensures you make informed, profitable decisions in the agricultural land market.",
-            followUs: "YOU CAN FOLLOW US ON",
-            quickLinks: "QUICK LINKS",
-            footerAbout:
-              "RASMCO Group is a leading economic ecosystem in the Kingdom, driving strategic integration across three sectors: Agriculture, Industry, and Real Estate. In alignment with Saudi Vision 2030, the Group manages massive agricultural projects exceeding 30 million m² to secure supply chains and achieve self-sufficiency with 100% chemical-free, natural products year-round."
-          },
-          ar: {
-            navAbout: "من نحن",
-            navSubsidiaries: "الشركات التابعة",
-            navGoals: "أهدافنا",
-            navAffiliations: "الانتماءات",
-            navPartners: "الشركاء",
-            navContact: "اتصل بنا",
-            heroTitle: "نزرع المجد، ونصنع الفخر<br>ونبني الوطن",
-            heroDownload: "اضغط هنا لتحميل ملف الشركة",
-            whoTitle: "من نحن؟",
-            whoCopy:
-              "<strong>مجموعة راسمكو</strong> منظومة اقتصادية سعودية رائدة تأسست عام 1987، وتقود تكاملاً استراتيجياً عبر <strong>الزراعة والصناعة والعقار.</strong> وبما يتوافق مع <strong>رؤية السعودية 2030،</strong> ندير أكثر من <strong>30 مليون م²</strong> من الأراضي الزراعية لتحقيق <strong>الاكتفاء الذاتي على مدار العام</strong> بإنتاج <strong>طبيعي 100% وخالٍ من المواد الكيميائية يتجاوز 250,000 طن سنوياً.</strong> واستناداً إلى <strong>أكبر مجمع صناعي في المملكة بمساحة 33,000 م²،</strong> وأسطول لوجستي حديث للسلسلة الباردة، والتزام <strong>صفر نفايات صناعية</strong>، نجمع بين الحجم والاستدامة المطلقة. واليوم نمد خبراتنا عبر <strong>الأسواق العربية المجاورة،</strong> لنقدم منتجات وحلولاً صناعية <strong>صنع في السعودية</strong> مبنية على الثقة والجودة والابتكار المستدام.",
-            readMore: "اقرأ المزيد",
-            numbersTitle: "راسمكو بالأرقام",
-            numbersIntro:
-              "<strong>مجموعة راسمكو</strong> منظومة اقتصادية رائدة في المملكة، تقود تكاملاً استراتيجياً عبر ثلاثة قطاعات: الزراعة، والصناعة، والعقار.",
-            stat1: "إجمالي مساحة الأراضي الزراعية",
-            stat2: "الإنتاج الزراعي السنوي",
-            stat3: "مساحة المجمع الصناعي المتقدم",
-            stat4: "الطاقة الإنتاجية الصناعية السنوية",
-            whyTitle: "لماذا تختارنا؟",
-            whyLead:
-              "نجمع بين الخبرة الزراعية العميقة والرؤية الثاقبة لسوق العقار لتعظيم قيمة استثمارك الزراعي. تضمن لك معرفتنا المتخصصة اتخاذ قرارات مدروسة ومربحة في سوق الأراضي الزراعية.",
-            whyExpTitle: "الخبرة",
-            whyProdTitle: "المنتجات",
-            whyDelTitle: "التوريد",
-            whyPriceTitle: "التسعير",
-            whyLorem:
-              "نجمع بين الخبرة الزراعية العميقة والرؤية الثاقبة لسوق العقار لتعظيم قيمة استثمارك الزراعي. تضمن لك معرفتنا المتخصصة اتخاذ قرارات مدروسة ومربحة في سوق الأراضي الزراعية.",
-            sectorsTitle: "قطاعات مجموعة راسمكو",
-            sectorAgri:
-              "إنتاج وطني ضخم يدعم أعلى معايير الأمن الحيوي والجودة المستدامة",
-            sectorInd:
-              "مجمع صناعي متكامل يضم خطوط إنتاج عالمية ومسالخ آلية متقدمة مع تعبئة MAP الذكية لضمان نقاء طبيعي 100%",
-            sectorRe:
-              "الركن الهندسي الذي يشيد ويطور منشآت المجموعة ومراكزها اللوجستية",
-            partnersTitle: "شركاء راسمكو",
-            partnersCopy:
-              "نجمع بين الخبرة الزراعية العميقة والرؤية الثاقبة لسوق العقار لتعظيم قيمة استثمارك الزراعي.<br><br>تضمن لك معرفتنا المتخصصة اتخاذ قرارات مدروسة ومربحة في سوق الأراضي الزراعية.",
-            followUs: "يمكنكم متابعتنا عبر",
-            quickLinks: "روابط سريعة",
-            footerAbout:
-              "مجموعة راسمكو منظومة اقتصادية رائدة في المملكة، تقود تكاملاً استراتيجياً عبر ثلاثة قطاعات: الزراعة، والصناعة، والعقار. وبما يتوافق مع رؤية السعودية 2030، تدير المجموعة مشاريع زراعية ضخمة تتجاوز 30 مليون م² لتأمين سلاسل الإمداد وتحقيق الاكتفاء الذاتي بمنتجات طبيعية خالية من المواد الكيميائية على مدار العام."
-          }
-        };
-
-        function applyLang(lang) {
-          var dict = i18n[lang];
-          document.documentElement.lang = lang;
-          document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-          document.querySelectorAll("[data-i18n]").forEach(function (el) {
-            var key = el.getAttribute("data-i18n");
-            if (dict[key]) el.textContent = dict[key];
-          });
-          document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
-            var key = el.getAttribute("data-i18n-html");
-            if (dict[key]) el.innerHTML = dict[key];
-          });
-          var toggle = document.getElementById("langToggle");
-          toggle.textContent = lang === "ar" ? "English" : "العربية";
-          toggle.setAttribute("data-lang", lang === "ar" ? "en" : "ar");
-        }
-
-        document.getElementById("langToggle").addEventListener("click", function () {
-          applyLang(this.getAttribute("data-lang"));
-        });
-
-        var dots = Array.prototype.slice.call(document.querySelectorAll("#heroDots .dot"));
-        var slide = 1;
-        function setSlide(index) {
-          slide = (index + dots.length) % dots.length;
-          dots.forEach(function (dot, i) {
-            dot.classList.toggle("active", i === slide);
-          });
-        }
-        dots.forEach(function (dot, i) {
-          dot.addEventListener("click", function () {
-            setSlide(i);
-          });
-        });
-        document.querySelector(".hero-arrow-prev").addEventListener("click", function () {
-          setSlide(slide - 1);
-        });
-        document.querySelector(".hero-arrow-next").addEventListener("click", function () {
-          setSlide(slide + 1);
-        });
-
-        var tabs = document.querySelectorAll(".why-tab");
-        var panels = document.querySelectorAll(".why-panel");
-        tabs.forEach(function (tab) {
-          tab.addEventListener("click", function () {
-            var target = tab.getAttribute("data-target");
-            tabs.forEach(function (t) {
-              t.classList.toggle("active", t === tab);
-            });
-            panels.forEach(function (panel) {
-              panel.classList.toggle("active", panel.getAttribute("data-panel") === target);
-            });
-          });
-        });
-
-        var partnerShift = 0;
-        document.querySelector(".partners-next").addEventListener("click", function () {
-          partnerShift = partnerShift ? 0 : 28;
-          document.querySelector(".partners-strip").style.transform =
-            "translateX(" + (document.documentElement.dir === "rtl" ? partnerShift : -partnerShift) + "px)";
-        });
-      })();
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
