@@ -1,0 +1,338 @@
+/* ============================================================ */
+/* Subpage (Subsidiaries / Sector Detail) — extends style.css   */
+/* ============================================================ */
+
+/* ---------------- Local brand fonts (from /Fonts) ---------------- */
+
+@font-face {
+  font-family: "GESSTwo";
+  src: url("Fonts/GE SS Two Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GESSTwo";
+  src: url("Fonts/GESSTwoMedium-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GESSText";
+  src: url("Fonts/GE SS Text Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RubikLocal";
+  src: url("Fonts/Rubik-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RubikLocal";
+  src: url("Fonts/Rubik-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --sector-green: #6f925a;
+  --sector-green-dark: #5c7c49;
+  /* Base body font stays on Rubik (now served locally from /Fonts so the
+     page works offline) — GE SS Two/Text render Latin digits as Arabic-Indic
+     numerals, so they must NOT be used for any text containing numbers. */
+  --font: "RubikLocal", "Rubik", "Cairo", sans-serif;
+}
+
+body {
+  font-family: var(--font);
+}
+
+/* GE SS brand fonts are only safe on short, number-free headings/labels */
+.page-banner-title,
+.sector-select-section .section-title,
+.sector-detail-heading,
+.products-title,
+.product-name {
+  font-family: "GESSText", "GESSTwo", var(--font);
+}
+
+/* ---------------- Page banner (short hero for inner pages) --------------- */
+
+.page-banner {
+  position: relative;
+  min-height: 460px;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  background: #333;
+}
+
+.page-banner .hero-bg-slide {
+  transform: none;
+  visibility: visible;
+}
+
+.page-banner-title-wrap {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 70px;
+  position: relative;
+  z-index: 2;
+}
+
+.page-banner-title {
+  color: var(--gold-hero);
+  font-size: 34px;
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
+}
+
+/* ---------------- Sector selector cards ---------------- */
+
+.sector-select-section {
+  position: relative;
+  padding: 72px 0 76px;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.sector-select-artwork-left,
+.sector-select-artwork-right {
+  position: absolute;
+  top: 0;
+  width: 46%;
+  max-width: 660px;
+  height: 420px;
+  background: url("images/deco-pattern.png") right top / contain no-repeat;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sector-select-artwork-left {
+  left: 0;
+  transform: scaleX(-1);
+}
+
+.sector-select-artwork-right {
+  right: 0;
+}
+
+.sector-select-section .section-title {
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 46px;
+  position: relative;
+  z-index: 1;
+}
+
+.sector-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 26px;
+  position: relative;
+  z-index: 1;
+}
+
+.sector-card {
+  flex: 1 1 260px;
+  max-width: 300px;
+  background: #ececec;
+  border-radius: 2px;
+  padding: 42px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sector-card a {
+  display: block;
+}
+
+.sector-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.sector-card img {
+  max-width: 168px;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------------- Sector detail intro band (green) ---------------- */
+
+.sector-detail-band {
+  background: var(--sector-green);
+  padding: 46px 0;
+  color: var(--white);
+}
+
+.sector-detail-band .row {
+  align-items: center;
+}
+
+.sector-detail-logo {
+  max-width: 190px;
+  width: 100%;
+  height: auto;
+}
+
+.sector-detail-heading {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: var(--white);
+}
+
+.sector-detail-copy {
+  font-size: 16.5px;
+  font-weight: 300;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.sector-detail-copy strong {
+  font-weight: 700;
+}
+
+/* ---------------- Product list section ---------------- */
+
+.products-section {
+  position: relative;
+  padding: 88px 0 60px;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.products-section .deco-r-bg {
+  opacity: 0.35;
+}
+
+.products-title {
+  color: var(--sector-green);
+  font-size: 42px;
+  font-weight: 500;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.products-subtitle {
+  color: var(--gold);
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.product-row {
+  position: relative;
+  z-index: 1;
+  padding: 34px 0;
+}
+
+.product-row:not(:last-of-type) {
+  border-bottom: 1px dotted #c2c2c2;
+}
+
+.product-name {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.product-copy {
+  font-size: 15.5px;
+  font-weight: 300;
+  line-height: 1.7;
+  text-align: justify;
+  margin: 0;
+}
+
+.product-copy strong {
+  font-weight: 600;
+}
+
+.product-hex {
+  width: 100%;
+  max-width: 230px;
+  aspect-ratio: 1 / 0.87;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  border: 2px solid #b9b9b9;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.product-hex img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 991.98px) {
+  .products-title {
+    font-size: 34px;
+  }
+
+  .product-hex {
+    max-width: 190px;
+    margin-bottom: 24px;
+  }
+
+  .page-banner {
+    min-height: 340px;
+  }
+
+  .page-banner-title {
+    font-size: 28px;
+  }
+
+  .sector-select-artwork-left,
+  .sector-select-artwork-right {
+    height: 280px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .sector-detail-band .col-auto {
+    margin: 0 auto 20px;
+  }
+
+  .sector-detail-band {
+    text-align: center;
+  }
+
+  .sector-card {
+    max-width: 100%;
+  }
+
+  .products-title {
+    font-size: 28px;
+  }
+
+  .page-banner-title-wrap {
+    padding-bottom: 40px;
+  }
+}
