@@ -180,8 +180,13 @@
     }
 
     var finishTransition = function () {
-      currentSlide.className = "hero-bg-slide";
-      nextSlide.className = "hero-bg-slide active";
+      slides.forEach(function (slide, idx) {
+        if (idx === targetIndex) {
+          slide.className = "hero-bg-slide active";
+        } else {
+          slide.className = "hero-bg-slide";
+        }
+      });
       currentSlideIndex = targetIndex;
       isSliding = false;
     };
