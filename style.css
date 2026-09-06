@@ -1376,7 +1376,7 @@ html[dir="rtl"] .sector-item.is-visible.active {
 }
 
 .read-more-link {
-  color: var(--black);
+  /* color: var(--black); */
   font-size: 18.75px;
   font-weight: 300;
   line-height: 22.5px;
@@ -1388,11 +1388,12 @@ html[dir="rtl"] .sector-item.is-visible.active {
 .sector-item:hover .read-more-link,
 .sector-item:focus-within .read-more-link,
 .sector-item.active .read-more-link {
-  transform: translateX(4px);
+  /* transform: translateX(4px); */
 }
 
 .read-more-link:hover {
-  color: #000000;
+  /* color: #000000; */
+  text-decoration: underline;
 }
 
 .read-more-link.is-disabled {
