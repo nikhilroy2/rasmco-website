@@ -136,6 +136,7 @@ a {
     opacity: 0;
     transform: translateY(26px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -147,6 +148,7 @@ a {
     opacity: 0;
     transform: translateY(-16px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -158,6 +160,7 @@ a {
     opacity: 0;
     transform: translate(-50%, -48%) scale(0.92);
   }
+
   100% {
     opacity: 0.95;
     transform: translate(-50%, -48%) scale(1);
@@ -168,16 +171,19 @@ a {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
 
 @keyframes downloadFloat {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(5px);
   }
@@ -186,10 +192,8 @@ a {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg,
-      rgba(0, 0, 0, 0.18) 0%,
-      rgba(0, 0, 0, 0.42) 55%,
-      rgba(0, 0, 0, 0.58) 100%);
+  background: black;
+  opacity: .6;
   pointer-events: none;
 }
 
@@ -443,6 +447,7 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .hero-hexagon,
   .hero-topbar,
   .brand-logo,
@@ -655,22 +660,22 @@ html[dir="rtl"] .who-section .who-visual {
   transition-delay: 0.12s;
 }
 
-.numbers-section .numbers-grid > div:nth-child(1) .stat-item {
+.numbers-section .numbers-grid>div:nth-child(1) .stat-item {
   transform: translateY(32px) scale(0.96);
   transition-delay: 0.20s;
 }
 
-.numbers-section .numbers-grid > div:nth-child(2) .stat-item {
+.numbers-section .numbers-grid>div:nth-child(2) .stat-item {
   transform: translateY(32px) scale(0.96);
   transition-delay: 0.28s;
 }
 
-.numbers-section .numbers-grid > div:nth-child(3) .stat-item {
+.numbers-section .numbers-grid>div:nth-child(3) .stat-item {
   transform: translateY(32px) scale(0.96);
   transition-delay: 0.36s;
 }
 
-.numbers-section .numbers-grid > div:nth-child(4) .stat-item {
+.numbers-section .numbers-grid>div:nth-child(4) .stat-item {
   transform: translateY(32px) scale(0.96);
   transition-delay: 0.44s;
 }
@@ -736,6 +741,7 @@ html[dir="rtl"] .numbers-section.is-visible .deco-potato-left {
 }
 
 @media (max-width: 1199.98px) {
+
   .numbers-section.is-visible .deco-potato-left,
   .numbers-section.is-visible .deco-potato-v,
   .numbers-section.is-visible .deco-potato-h {
@@ -744,6 +750,7 @@ html[dir="rtl"] .numbers-section.is-visible .deco-potato-left {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .numbers-section .section-title,
   .numbers-section .numbers-intro,
   .numbers-section .stat-item,
@@ -917,6 +924,7 @@ html[dir="rtl"] .why-section .why-visual {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .why-section .section-title,
   .why-section .why-lead,
   .why-section .why-panel,
@@ -1269,6 +1277,7 @@ html[dir="rtl"] .sector-item.is-visible.active {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .sectors-section .section-title,
   .sectors-section .deco-r-bg,
   .sectors-section .deco-pattern-bg,
@@ -1478,6 +1487,7 @@ html[dir="rtl"] .partners-section .partners-stage {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .partners-section .section-title,
   .partners-section .partners-text-viewport,
   .partners-section .partners-stage,
@@ -1963,6 +1973,7 @@ html[dir="rtl"] .partners-section .partners-stage {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .site-footer .footer-logo,
   .site-footer .footer-about,
   .site-footer .follow-row,

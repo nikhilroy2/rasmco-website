@@ -194,6 +194,15 @@ body {
   height: auto;
 }
 
+.sector-detail-divider {
+  width: 1.5px;
+  height: 135px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 1px;
+  flex-shrink: 0;
+  margin: 0 42px;
+}
+
 .sector-detail-heading {
   font-size: 26px;
   font-weight: 600;
@@ -273,10 +282,10 @@ body {
 
 .product-hex {
   width: 100%;
-  max-width: 230px;
-  aspect-ratio: 1 / 0.87;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  border: 2px solid #b9b9b9;
+  /* max-width: 230px; */
+  /* aspect-ratio: 1 / 0.87; */
+  /* clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); */
+  /* border: 2px solid #b9b9b9; */
   padding: 8px;
   display: flex;
   align-items: center;
@@ -320,6 +329,12 @@ body {
     margin: 0 auto 20px;
   }
 
+  .sector-detail-divider {
+    width: 80px;
+    height: 1.5px;
+    margin: 16px auto 22px;
+  }
+
   .sector-detail-band {
     text-align: center;
   }
@@ -335,4 +350,15 @@ body {
   .page-banner-title-wrap {
     padding-bottom: 40px;
   }
+}
+
+.hero_shape {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  line-height: 0;
+  background: url(./images/hero_shape_subpage.png) center / auto no-repeat
 }
